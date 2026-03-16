@@ -9,9 +9,9 @@ Custom, mobile apparel UI for creating a print-ready design. The editable page i
 
 ### Repository Structure
 
-- Repository is a fully functional Android project with a single `:app` module.
-- Starting point of the starter kit implementation is at `ApparelConfigurationBuilder.kt`.
-- Demo app launches `EditorActivity.kt` that displays the `Editor` composable using `ApparelConfigurationBuilder`.
+- Repository is a fully functional Android project with `:starter-kit` and `:app` modules.
+- `:starter-kit` library module encapsulates the implementation of the starter kit. Starting point of the starter kit implementation is at `ApparelConfigurationBuilder.kt`.
+- `:app` application module launches `EditorActivity.kt` that displays the `Editor` composable using `ApparelConfigurationBuilder`.
 
 ### Building The Repository
 
