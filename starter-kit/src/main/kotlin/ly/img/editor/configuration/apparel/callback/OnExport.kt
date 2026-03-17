@@ -37,19 +37,15 @@ fun ApparelConfigurationBuilder.onPreExport() {
     showLoading = true
 }
 
-// highlight-starter-kit-apparel-on-export-byte-buffer
 suspend fun ApparelConfigurationBuilder.onExportByteBuffer(): ByteBuffer = export(
     block = requireNotNull(editorContext.engine.scene.get()),
     mimeType = MimeType.PDF,
 )
-// highlight-starter-kit-apparel-on-export-byte-buffer
 
-// highlight-starter-kit-apparel-on-post-export
 suspend fun ApparelConfigurationBuilder.onPostExport(byteBuffer: ByteBuffer) {
     val file = writeToFile(byteBuffer = byteBuffer, mimeType = MimeType.PDF)
     shareFile(file = file, mimeType = MimeType.PDF)
 }
-// highlight-starter-kit-apparel-on-post-export
 
 fun ApparelConfigurationBuilder.onExportError(error: Exception) {
     if (error is CancellationException) {

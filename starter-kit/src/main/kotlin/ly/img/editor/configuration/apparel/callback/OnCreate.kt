@@ -56,13 +56,10 @@ fun ApparelConfigurationBuilder.onPreCreateScene() {
     )
 }
 
-// highlight-starter-kit-apparel-on-create-scene
 suspend fun ApparelConfigurationBuilder.onCreateScene() {
     getOrLoadScene(sceneUri = "file:///android_asset/scene/apparel.scene".toUri())
 }
-// highlight-starter-kit-apparel-on-create-scene
 
-// highlight-starter-kit-apparel-on-load-asset-sources
 suspend fun ApparelConfigurationBuilder.onLoadAssetSources() {
     // Load asset sources in parallel from content.json files
     coroutineScope {
@@ -126,7 +123,6 @@ suspend fun ApparelConfigurationBuilder.onLoadAssetSources() {
         editorContext.engine.asset.addSource(textAssetSource)
     }
 }
-// highlight-starter-kit-apparel-on-load-asset-sources
 
 fun ApparelConfigurationBuilder.onPostCreateScene() {
     val engine = editorContext.engine
