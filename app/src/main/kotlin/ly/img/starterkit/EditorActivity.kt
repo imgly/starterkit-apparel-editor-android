@@ -1,9 +1,11 @@
 package ly.img.starterkit
 
+// highlight-starter-kit-activity-full
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.Composable
 import ly.img.editor.Editor
 import ly.img.editor.configuration.apparel.ApparelConfigurationBuilder
 import ly.img.editor.core.configuration.EditorConfiguration
@@ -12,15 +14,29 @@ import ly.img.editor.core.configuration.remember
 class EditorActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        // This is required to remove the default action bar on top.
+        setTheme(android.R.style.Theme_Material_Light_NoActionBar)
+        // This is required, so that the editor is displayed full screen on relatively older devices.
         enableEdgeToEdge()
         setContent {
-            Editor(
-                configuration = {
-                    EditorConfiguration.remember(::ApparelConfigurationBuilder)
-                },
-            ) {
+            ApparelEditor {
+                // Close the editor, ignore any errors.
                 finish()
             }
         }
     }
 }
+
+// highlight-starter-kit-composable
+@Composable
+private fun ApparelEditor(onClose: (error: Throwable?) -> Unit) {
+    Editor(
+        license = null, // pass null or empty for evaluation mode with watermark
+        configuration = {
+            EditorConfiguration.remember(::ApparelConfigurationBuilder)
+        },
+        onClose = onClose,
+    )
+}
+// highlight-starter-kit-composable
+// highlight-starter-kit-activity-full

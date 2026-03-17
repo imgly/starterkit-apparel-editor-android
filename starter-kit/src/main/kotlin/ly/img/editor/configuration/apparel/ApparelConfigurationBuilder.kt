@@ -9,10 +9,10 @@ import ly.img.editor.configuration.apparel.component.rememberCanvasMenu
 import ly.img.editor.configuration.apparel.component.rememberDock
 import ly.img.editor.configuration.apparel.component.rememberInspectorBar
 import ly.img.editor.configuration.apparel.component.rememberNavigationBar
+import ly.img.editor.configuration.apparel.component.rememberOverlay
 import ly.img.editor.core.EditorScope
 import ly.img.editor.core.ScopedProperty
 import ly.img.editor.core.component.EditorComponent
-import ly.img.editor.core.component.remember
 
 @Stable
 class ApparelConfigurationBuilder : BasicConfigurationBuilder() {
@@ -53,9 +53,7 @@ class ApparelConfigurationBuilder : BasicConfigurationBuilder() {
     }
 
     override var overlay: ScopedProperty<EditorScope, EditorComponent<*>>? = {
-        EditorComponent.remember {
-            decoration = { Overlay() }
-        }
+        rememberOverlay()
     }
 
     companion object {

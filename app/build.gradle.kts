@@ -41,5 +41,4 @@ android {
 
 dependencies {
     implementation(project(":starter-kit"))
-    implementation("androidx.activity:activity-ktx:1.9.0")
 }
