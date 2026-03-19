@@ -21,6 +21,9 @@ import ly.img.engine.ShapeType
 import ly.img.engine.StrokeStyle
 import ly.img.engine.populateAssetSource
 
+/**
+ * The callback that is invoked when the editor is created.
+ */
 suspend fun ApparelConfigurationBuilder.onCreate(
     preCreateScene: suspend ApparelConfigurationBuilder.() -> Unit = {
         onPreCreateScene()
@@ -48,6 +51,9 @@ suspend fun ApparelConfigurationBuilder.onCreate(
     }
 }
 
+/**
+ * The callback that is invoked before the scene is created.
+ */
 fun ApparelConfigurationBuilder.onPreCreateScene() {
     showLoading = true
     editorContext.engine.editor.setSettingBoolean(
@@ -56,10 +62,16 @@ fun ApparelConfigurationBuilder.onPreCreateScene() {
     )
 }
 
+/**
+ * The callback that is responsible for creating the scene.
+ */
 suspend fun ApparelConfigurationBuilder.onCreateScene() {
     getOrLoadScene(sceneUri = "file:///android_asset/scene/apparel.scene".toUri())
 }
 
+/**
+ * The callback that loads all the required assets sources.
+ */
 suspend fun ApparelConfigurationBuilder.onLoadAssetSources() {
     // Load asset sources in parallel from content.json files
     coroutineScope {
@@ -124,11 +136,16 @@ suspend fun ApparelConfigurationBuilder.onLoadAssetSources() {
     }
 }
 
+/**
+ * The callback that is invoked right after [onCreateScene], after the scene is created.
+ */
 fun ApparelConfigurationBuilder.onPostCreateScene() {
     val engine = editorContext.engine
     val page = requireNotNull(engine.scene.getCurrentPage())
     engine.block.setClipped(block = page, clipped = true)
     engine.block.setBoolean(block = page, property = "fill/enabled", value = false)
+
+    // Add dotted outline design block.
     engine.block.findByName(ApparelConfigurationBuilder.Companion.OUTLINE_BLOCK_NAME).firstOrNull() ?: run {
         val outline = engine.block.create(blockType = DesignBlockType.Graphic)
         engine.block.setName(block = outline, name = ApparelConfigurationBuilder.Companion.OUTLINE_BLOCK_NAME)
@@ -159,6 +176,10 @@ fun ApparelConfigurationBuilder.onPostCreateScene() {
     }
 }
 
+/**
+ * The callback that is invoked as the last step of [onCreate].
+ * It always runs, no matter success or failure on previous steps.
+ */
 fun ApparelConfigurationBuilder.onCreateFinally() {
     showLoading = false
 }

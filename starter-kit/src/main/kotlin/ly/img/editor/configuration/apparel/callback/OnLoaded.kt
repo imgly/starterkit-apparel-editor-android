@@ -10,6 +10,9 @@ import ly.img.editor.configuration.apparel.ApparelConfigurationBuilder
 import ly.img.editor.core.state.EditorViewMode
 import ly.img.engine.SizeMode
 
+/**
+ * The callback that is invoked when the editor is loaded and ready to be used.
+ */
 suspend fun ApparelConfigurationBuilder.onLoaded() {
     coroutineScope {
         launch { observeEditorViewMode() }
@@ -19,6 +22,9 @@ suspend fun ApparelConfigurationBuilder.onLoaded() {
     }
 }
 
+/**
+ * Function that zooms to the backdrop image (t-shirt) when the [EditorViewMode] is preview.
+ */
 suspend fun ApparelConfigurationBuilder.observeEditorViewMode() {
     editorContext.state
         .distinctUntilChangedBy { it.viewMode to it.insets }
@@ -39,10 +45,14 @@ suspend fun ApparelConfigurationBuilder.observeEditorViewMode() {
         }
 }
 
+/**
+ * Function that observes the size changes of the page and updates the dimensions of the dotted outline block
+ * accordingly.
+ */
 suspend fun ApparelConfigurationBuilder.observePageSizeChanges() {
     val engine = editorContext.engine
     val page = requireNotNull(engine.scene.getCurrentPage())
-    val outline = engine.block.findByName(ApparelConfigurationBuilder.Companion.OUTLINE_BLOCK_NAME).first()
+    val outline = engine.block.findByName(ApparelConfigurationBuilder.OUTLINE_BLOCK_NAME).first()
     engine.event.subscribe(listOf(page))
         .map { engine.block.getWidth(block = page) to engine.block.getHeight(block = page) }
         .distinctUntilChanged()
@@ -62,9 +72,13 @@ suspend fun ApparelConfigurationBuilder.observePageSizeChanges() {
         }
 }
 
+/**
+ * Function that observes the [ly.img.editor.core.state.EditorState.isTouchActive] value and updates
+ * the visibility of the dotted outline block accordingly.
+ */
 suspend fun ApparelConfigurationBuilder.observeIsTouchActive() {
     val engine = editorContext.engine
-    val outline = engine.block.findByName(ApparelConfigurationBuilder.Companion.OUTLINE_BLOCK_NAME).first()
+    val outline = engine.block.findByName(ApparelConfigurationBuilder.OUTLINE_BLOCK_NAME).first()
     editorContext.state
         .distinctUntilChangedBy { it.isTouchActive }
         .collect {
